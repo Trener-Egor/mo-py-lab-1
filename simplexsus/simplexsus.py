@@ -1,5 +1,5 @@
 """
-Программа реализует симплекс-метод для решения задач линейного программирования.
+Программа реализует симплекс-метод для решения задач линейного программирования
 Содержит функции для проверки входных данных, создания симплекс-таблицы, 
 поиска разрешающего элемента, выполнения итераций симплекс-метода и вывода 
 результатов на экран.
@@ -52,12 +52,12 @@ def check_simplex_response(c, A, b):
 
     for row in range(len(b)):
         if b[row] < 0:                      # Если есть отрицательный элемент в b
-            for col in range(len(A[0])):    # Ошибка в исходном коде: A должен быть матрицей
-                if A[row][col] < 0:
-                    return True     # Существуют отрицательные коэффициенты
-            return False            # Нет подходящих коэффициентов
+            for col in range(len(A[0])):
+                if min(A[row]) >= 0:
+                    return False     # Нет подходящих коэффициентов
 
-    return True
+
+    return True                      # Существуют отрицательные коэффициенты
 
 
 def create_simplex_table(c, A, b, f):
@@ -225,10 +225,8 @@ def simplex_table_iteration(c, A, b, f, simplex_resolve):
     # Обновляем значение целевой функции
     new_f = f - ((c[simplex_resolve[2]] * b[simplex_resolve[1]]) / simplex_resolve[0])
 
-    if new_f <= f:
-        return new_c, new_A, new_b, new_f
-    
-    raise ValueError("[ ! ] Не получается улучшить симплекс-таблицу")
+
+    return new_c, new_A, new_b, new_f
 
 
 def simplexsus(minimize, c, A, b, f):
@@ -245,11 +243,8 @@ def simplexsus(minimize, c, A, b, f):
             for i in range(len(c)):
                 c[i] *= -1
 
-        while max(c) > 0:
-        ######################
-        #i = 0               # 
-        #while i < 4:        #
-        ######################
+        while (max(c) > 0 or (min(b) < 0)):
+
             simplex_table = create_simplex_table(c, A, b, f)    # Создание симплекс-таблицы
             print_simplex_table(simplex_table)                  # Вывод симплекс-таблицы
 
@@ -267,9 +262,7 @@ def simplexsus(minimize, c, A, b, f):
 
             c, A, b, f = simplex_table_iteration(c, A, b, f, simplex_resolve)
             
-            ##########
-            #i +=1   #
-            ##########
+
 
         # Найдено оптимальное решение
         print("\n[ + ] OPTI ANS")
