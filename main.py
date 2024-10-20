@@ -4,6 +4,7 @@
 
 from simplexsus.simplexsus import simplexsus
 
+
 def main():
     """
     Точка входа программы - инициализация значений и вызов симплекс-метода.
@@ -14,7 +15,7 @@ def main():
     b = [2, 3, 2]                               # Правая часть ограничений
     f = 0
 
-    print("[ + ] Ans:", simplexsus(minimize, c, A, b, f))
+    print("[ + ] Ans:", simplexsus(c, A, b, f, minimize))
 
     return 0
 
