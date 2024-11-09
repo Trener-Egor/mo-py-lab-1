@@ -172,7 +172,7 @@ def find_min_ratio(A, b, min_ratio_col):
         ratio = b[row] / A[row][min_ratio_col]
 
         # Обновляем минимальное отношение, если нашли новое
-        if (ratio > 0) and (ratio < min_ratio):
+        if (ratio > 0) and (ratio <= min_ratio):
             min_ratio = ratio
             min_ratio_row = row
 
